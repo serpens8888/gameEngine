@@ -76,7 +76,38 @@ std::vector<SDL_Point> tri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, u
 	
 }
 
+std::vector<fragment> RGBtri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3){
+	std::vector<fragment> tri;
+	
+	int minX = std::min(x1, std::min(x2,x3));
+	int maxX = std::max(x1, std::max(x2,x3));
+	int minY = std::min(y1, std::min(y2,y3));
+	int maxY = std::max(y1, std::max(y2,y3));
 
+	//clip to screen
+	minX =	std::max(minX, 0);
+	maxX =	std::min(maxX, 1919);
+	minY =	std::max(minY, 0);
+	maxY =	std::min(maxY, 1079);
+
+	for(uint16_t i = minY;i<=maxY;i++){
+		for(uint16_t k = minX;k<=maxX;k++){
+     			int a = edgeFunction(x2,y2,x3,y3,k,i);
+     			int b = edgeFunction(x3,y3,x1,y1,k,i);
+     			int c = edgeFunction(x1,y1,x2,y2,k,i);
+
+     			if(a>=0 && b>=0 && c>=0){
+				uint8_t r = a & 0xff;
+				uint8_t g = b & 0xff;
+				uint8_t b = c & 0xff;
+     				tri.push_back({k,i,r,g,b,255});
+     			}
+     		}
+	}
+     				
+	return tri;     			
+	
+}
 
 
 

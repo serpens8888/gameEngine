@@ -26,9 +26,7 @@ int main(){
 
 	SDL_RenderClear(renderer);
 
-	draw(tri(100,100,200,10,300,100),green);
-
-	draw(tri(500,1000,800,25,1100,1000),red);
+	drawFrag(RGBtri(0,1080,960,0,1920,1080));
 
 	SDL_RenderPresent(renderer);
 

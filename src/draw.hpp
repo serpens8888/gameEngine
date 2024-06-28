@@ -15,3 +15,4 @@ std::vector<SDL_Point> tri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, u
 
 int edgeFunction(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3);
 
+std::vector<fragment> RGBtri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3);
