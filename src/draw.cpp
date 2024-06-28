@@ -62,8 +62,8 @@ std::vector<SDL_Point> tri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, u
 
 	for(int i = minY;i<=maxY;i++){
 		for(int k = minX;k<=maxX;k++){
-     			int a = edgeFunction(x2,y2,x3,x3,k,i);
-     			int b = edgeFunction(x3,y3,x1,x1,k,i);
+     			int a = edgeFunction(x2,y2,x3,y3,k,i);
+     			int b = edgeFunction(x3,y3,x1,y1,k,i);
      			int c = edgeFunction(x1,y1,x2,y2,k,i);
 
      			if(a>=0 && b>=0 && c>=0){
