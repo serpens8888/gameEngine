@@ -29,3 +29,4 @@ void rendererCheck(){
 		assert("renderer failed to initialize");
 	}
 }
+

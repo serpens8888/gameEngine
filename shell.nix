@@ -1,11 +1,11 @@
 { pkgs ? import <nixpkgs> {} }:
 
 
-pkgs.mkShell {
+pkgs.mkShell{
 	buildInputs = with pkgs.buildPackages; [
 		SDL2
-		wayland
-	];
+		];
+	
 
 }
 
