@@ -26,13 +26,9 @@ int main(){
 
 	SDL_RenderClear(renderer);
 
-	draw(rect(5,5,100,100), white);
-	draw(rect(15,200,80,320), magenta);
-	draw(rect(120,800,1400,1000), yellow);
-	draw(rect(0,0,5,5), blue);
-	draw(rect(800,100,1900,1080), teal);
-	draw(rect(300,0,1500,600), red);
-	draw(tri(100,500,300,100,500,700),green);
+	draw(tri(100,100,200,10,300,100),green);
+
+	draw(tri(500,1000,800,25,1100,1000),red);
 
 	SDL_RenderPresent(renderer);
 
