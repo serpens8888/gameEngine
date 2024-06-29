@@ -26,7 +26,14 @@ int main(){
 
 	SDL_RenderClear(renderer);
 
-	drawFrag(RGBtri(0,1080,960,0,1920,1080));
+
+
+	draw(tri({100,100},{200,0},{300,200}), yellow);
+	draw(tri({10,10},{20,5},{30,10}), magenta);
+	draw(tri({0,1080},{960,0},{1920,1080}), blue);
+		
+
+
 
 	SDL_RenderPresent(renderer);
 
