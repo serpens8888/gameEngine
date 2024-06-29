@@ -22,20 +22,31 @@ int main(){
 		}
 
 
+	for(uint16_t i = 0;i<900;i++){
+
 	SDL_SetRenderDrawColor(renderer, 0,0,0,255);
 
 	SDL_RenderClear(renderer);
 
 
 
-	draw(tri({100,100},{200,0},{300,200}), yellow);
-	draw(tri({10,10},{20,5},{30,10}), magenta);
-	draw(tri({0,1080},{960,0},{1920,1080}), blue);
-		
+			constexpr uint16_t ten = 10;
+			uint16_t j = i+192;
+			uint16_t k = i+108;
+			vec2 a = {i,i};
+			vec2 b = {j,i};
+			vec2 c = {j,j};
+			vec2 d = {i,k};
+
+			draw(quad(a,b,c,d), teal);
 
 
 
 	SDL_RenderPresent(renderer);
+	sleep(5);	
+	
+	}
+
 
 
 	}

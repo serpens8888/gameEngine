@@ -5,6 +5,9 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
+#include <array>
+#include <thread>
+#include <chrono>
 
 
 #endif

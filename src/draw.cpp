@@ -1,6 +1,7 @@
 #include "draw.hpp"
 #include "colors.hpp"
 
+
 void draw(const std::vector<SDL_Point>& points, const RGBA& color){
 	SDL_SetRenderDrawColor(renderer,color.r, color.g,color.b, color.a);
 	SDL_RenderDrawPoints(renderer, points.data(), points.size());
@@ -13,7 +14,7 @@ void drawFrag(const std::vector<fragment>& frags){
 	}
 }
 
-std::vector<SDL_Point> Hline(uint16_t x1, uint16_t x2, uint16_t y){
+std::vector<SDL_Point> Hline(const uint16_t& x1, const uint16_t& x2, const uint16_t& y){
 	std::vector<SDL_Point> line((x2-x1)+2);
 	for(int i = 0;i<=(x2-x1)+1;i++){
      		line[i].x = x1+i;
@@ -22,7 +23,7 @@ std::vector<SDL_Point> Hline(uint16_t x1, uint16_t x2, uint16_t y){
 	return line;
 }
 
-std::vector<SDL_Point> Vline(uint16_t y1, uint16_t y2, uint16_t x){
+std::vector<SDL_Point> Vline(const uint16_t& y1, const uint16_t& y2, const uint16_t& x){
 		std::vector<SDL_Point> line((y2-y1)+2);
 	for(int i = 0;i<=(y2-y1)+1;i++){
      		line[i].x = x;
@@ -31,7 +32,7 @@ std::vector<SDL_Point> Vline(uint16_t y1, uint16_t y2, uint16_t x){
 	return line;
 }
 
-std::vector<SDL_Point> rect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){
+std::vector<SDL_Point> rect(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint16_t& y2){
 
 	std::vector<SDL_Point> rect;
 	for(int i = 0;i<=(x2-x1);i++){
@@ -43,11 +44,11 @@ std::vector<SDL_Point> rect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){
 }
 
 
-int edgeFunction(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3){
+int edgeFunction(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint16_t& y2, const uint16_t& x3, const uint16_t& y3){
 	return (x2-x1)*(y3-y1)-(y2-y1)*(x3-x1);
 }
 
-bool bias(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){
+bool bias(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint16_t& y2){
 	if((x1<x2&&y1==y2)||(y1>y2)){ //y is inverted so greater than here really means less than on a regular graph
 		return 0;
 	}
@@ -55,7 +56,7 @@ bool bias(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){
 
 }
 
-std::vector<SDL_Point> tri(vec2 v0, vec2 v1, vec2 v2){
+std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
 	std::vector<SDL_Point> tri;
 	
 	//bounding box
@@ -115,6 +116,8 @@ std::vector<SDL_Point> tri(vec2 v0, vec2 v1, vec2 v2){
 	
 }
 
+/* depracated
+
 std::vector<fragment> RGBtri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3){
 	std::vector<fragment> tri;
 	
@@ -147,6 +150,57 @@ std::vector<fragment> RGBtri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
      				
 	return tri;     			
 	
+}
+*/
+
+std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, const vec2& v3){
+
+	std::vector<SDL_Point> quad;
+
+	int32_t a = edgeFunction(v0.x,v0.y,v2.x,v2.y,v1.x,v1.y);
+	int32_t b = edgeFunction(v0.x,v0.y,v2.x,v2.y,v3.x,v3.y);
+	int32_t c = edgeFunction(v1.x,v1.y,v3.x,v3.y,v2.x,v2.y);
+	int32_t d = edgeFunction(v1.x,v1.y,v3.x,v3.y,v0.x,v0.y);
+
+	if(((a^b)&(c^d))==1){ //check if convex
+		std::vector<SDL_Point> triA = tri(v0,v1,v2);
+		std::vector<SDL_Point> triB = tri(v0,v2,v3);
+		quad.insert(quad.end(), triA.begin(), triA.end());
+		quad.insert(quad.end(), triB.begin(), triB.end());
+		return quad; //ez quad :)
+	}
+
+	//concave branch
+	//predicate returns 0 if true 1 if false, XOR sets the concave point to 1 and everything else to 0
+	bool aSignDelta = (a < 0)^1;
+	bool bSignDelta = (b < 0)^0;
+	bool cSignDelta = (c < 0)^1;
+	bool dSignDelta = (d < 0)^0;
+
+	uint8_t check = (aSignDelta << 0) | (bSignDelta << 1) | (cSignDelta << 2) | (dSignDelta << 3);
+
+	uint8_t concaveVec = (check > 1) + (check > 3) + (check > 7);
+	constexpr int size = 4;
+	const std::array<vec2, size> verts = {v0, v1, v2 ,v3};
+	
+	std::vector<SDL_Point> triA;
+	std::vector<SDL_Point> triB;
+	if(concaveVec == 0 || concaveVec == 2){
+		triA = tri(v0,v1,v2);
+		triB = tri(v0,v2,v3);
+		quad.insert(quad.end(), triA.begin(), triA.end());
+		quad.insert(quad.end(), triB.begin(), triB.end());
+		return quad; //hard quan :(
+	}
+
+		triA = tri(v0,v1,v3);
+		triB = tri(v3,v1,v2);
+		quad.insert(quad.end(), triA.begin(), triA.end());
+		quad.insert(quad.end(), triB.begin(), triB.end());
+		return quad; //hard quad :(
+
+
+
 }
 
 

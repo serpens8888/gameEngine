@@ -17,6 +17,8 @@ void rendererInit();
 
 void rendererCheck();
 
+void sleep(int time);
+
 struct RGBA{
 	uint8_t r;
 	uint8_t g;
