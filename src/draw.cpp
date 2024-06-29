@@ -85,10 +85,11 @@ std::vector<SDL_Point> tri(vec2 v0, vec2 v1, vec2 v2){
 
 	//barycentric coords at bounding box origin
 	vec2 p = {minX,minY};
-	int32_t w0_row = edgeFunction(v1.x,v1.y,v2.x,v2.y,p.x,p.y);
-	int32_t w1_row = edgeFunction(v2.x,v2.y,v0.x,v0.y,p.x,p.y);
-	int32_t w2_row = edgeFunction(v0.x,v0.y,v1.x,v1.y,p.x,p.y);
-
+	int32_t w0_row = edgeFunction(v1.x,v1.y,v2.x,v2.y,p.x,p.y) - bias0;
+	int32_t w1_row = edgeFunction(v2.x,v2.y,v0.x,v0.y,p.x,p.y) - bias1;
+	int32_t w2_row = edgeFunction(v0.x,v0.y,v1.x,v1.y,p.x,p.y) - bias2;
+	
+	//check if pixel is in tri or on top or left edge and color if true
 	for(p.y = minY;p.y<= maxY;p.y++){
 		int32_t w0 = w0_row;
 		int32_t w1 = w1_row;
