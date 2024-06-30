@@ -185,7 +185,7 @@ std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, cons
 		triB = tri(v0,v2,v3);
 		quad.insert(quad.end(), triA.begin(), triA.end());
 		quad.insert(quad.end(), triB.begin(), triB.end());
-		return quad; //hard quan :(
+		return quad; //hard quad :(
 	}
 
 		triA = tri(v0,v1,v3);
