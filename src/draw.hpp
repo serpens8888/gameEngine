@@ -17,6 +17,6 @@ int edgeFunction(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, con
 
 std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2);
 
-std::vector<fragment> RGBtri(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint16_t& y2, const uint16_t& x3, const uint16_t& y3);
+//std::vector<fragment> RGBtri(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint16_t& y2, const uint16_t& x3, const uint16_t& y3);
 
 std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, const vec2& v3);

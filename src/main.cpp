@@ -28,27 +28,20 @@ int main(){
 
 	SDL_RenderClear(renderer);
 
-	vec2 a = {100,100};
-	vec2 b = {200,000};
-	vec2 c = {1000,1000};
+	vec2 a = {0,1080};
+	vec2 b = {0,0};
+	vec2 c = {1920,0};
+	vec2 d = {1920,1080};
+	
+	draw(quad(a,b,c,d), teal);
 
-	draw(tri(a,b,c), yellow);
-
-	vec2 d = {1000,1000};
-	vec2 e = {600,100};
-	vec2 f = {1900,300};
-	vec2 g = {1800,1050};
-
-	draw(quad(d,e,f,g), green);
-	draw(quad(d,e,f,g), red);
-	draw(quad(d,e,f,g), blue);
 
 	SDL_RenderPresent(renderer);
 	
 	auto end = std::chrono::system_clock::now();
 
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start);
-	std::cout << "cycle duration: " << duration.count() << "\n";
+	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-start);
+	std::cout << "fps: " << 1000/(float(duration.count())/1000000) << "        ||        " << "ms per cycle: " << float(duration.count())/1000000 << "\n";
 
 	}
 

@@ -57,9 +57,7 @@ bool bias(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint
 }
 
 std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
-	std::vector<SDL_Point> tri;
-	
-
+	std::vector<SDL_Point> tri;	
 	//make bounding box and then clip to screen
 	const uint16_t minX =	std::max(std::min({v0.x,v1.x,v2.x}), uint16_t(0));
 	const uint16_t maxX =	std::min(std::max({v0.x,v1.x,v2.x}), uint16_t(1919));
@@ -106,8 +104,9 @@ std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
 		w2_row+=B01;
 	}
 
+	return tri;
+
      				
-	return tri;     			
 	
 }
 
@@ -147,7 +146,6 @@ std::vector<fragment> RGBtri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 	
 }
 */
-
 std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, const vec2& v3){
 
 	std::vector<SDL_Point> quad;
@@ -197,7 +195,6 @@ std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, cons
 
 
 }
-
 
 
 
