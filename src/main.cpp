@@ -22,34 +22,38 @@ int main(){
 		}
 
 
-	for(uint16_t i = 0;i<900;i++){
+	auto start = std::chrono::system_clock::now();
 
-	SDL_SetRenderDrawColor(renderer, 0,0,0,255);
+	SDL_SetRenderDrawColor(renderer, 180,100,200,255);
 
 	SDL_RenderClear(renderer);
 
+	vec2 a = {100,100};
+	vec2 b = {200,000};
+	vec2 c = {1000,1000};
 
+	draw(tri(a,b,c), yellow);
 
-			constexpr uint16_t ten = 10;
-			uint16_t j = i+192;
-			uint16_t k = i+108;
-			vec2 a = {i,i};
-			vec2 b = {j,i};
-			vec2 c = {j,j};
-			vec2 d = {i,k};
+	vec2 d = {1000,1000};
+	vec2 e = {600,100};
+	vec2 f = {1900,300};
+	vec2 g = {1800,1050};
 
-			draw(quad(a,b,c,d), teal);
-
-
+	draw(quad(d,e,f,g), green);
+	draw(quad(d,e,f,g), red);
+	draw(quad(d,e,f,g), blue);
 
 	SDL_RenderPresent(renderer);
-	sleep(5);	
 	
+	auto end = std::chrono::system_clock::now();
+
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start);
+	std::cout << "cycle duration: " << duration.count() << "\n";
+
 	}
 
 
 
-	}
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

@@ -59,17 +59,12 @@ bool bias(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint
 std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
 	std::vector<SDL_Point> tri;
 	
-	//bounding box
-	uint16_t minX = std::min(v0.x, std::min(v1.x,v2.x));
-	uint16_t maxX = std::max(v0.x, std::max(v1.x,v2.x));
-	uint16_t minY = std::min(v0.y, std::min(v1.y,v2.y));
-	uint16_t maxY = std::max(v0.y, std::max(v1.y,v2.y));
 
-	//clip to screen
-	minX =	std::max(minX, uint16_t(0));
-	maxX =	std::min(maxX, uint16_t(1919));
-	minY =	std::max(minY, uint16_t(0));
-	maxY =	std::min(maxY, uint16_t(1079));
+	//make bounding box and then clip to screen
+	const uint16_t minX =	std::max(std::min({v0.x,v1.x,v2.x}), uint16_t(0));
+	const uint16_t maxX =	std::min(std::max({v0.x,v1.x,v2.x}), uint16_t(1919));
+	const uint16_t minY =	std::max(std::min({v0.y,v1.y,v2.y}), uint16_t(0));
+	const uint16_t maxY =	std::min(std::max({v0.y,v1.y,v2.y}), uint16_t(1079));
 
 	//fill rule to only draw top and left edge for clockwise tri, counter clockwise doesnt get drawn
 	bool bias0 = bias(v1.x,v1.y,v2.x,v2.y);
