@@ -19,6 +19,8 @@ void rendererCheck();
 
 void sleep(int time);
 
+extern unsigned int threadCount;
+
 struct RGBA{
 	uint8_t r;
 	uint8_t g;

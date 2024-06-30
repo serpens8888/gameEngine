@@ -41,7 +41,8 @@ int main(){
 	auto end = std::chrono::system_clock::now();
 
 	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-start);
-	std::cout << "fps: " << 1000/(float(duration.count())/1000000) << "        ||        " << "ms per cycle: " << float(duration.count())/1000000 << "\n";
+	std::cout << "fps: " << 1000/(float(duration.count())/1000000) << "        ||        " << "ms elapsed this cycle: " << float(duration.count())/1000000 << "\n";
+	std::cout << "available threads: " << threadCount << "\n";
 
 	}
 

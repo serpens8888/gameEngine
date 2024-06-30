@@ -33,3 +33,5 @@ void rendererCheck(){
 void sleep(int time){
 	std::this_thread::sleep_for(std::chrono::milliseconds(time));
 };
+
+unsigned int threadCount = std::thread::hardware_concurrency();
