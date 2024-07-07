@@ -1,4 +1,6 @@
-#include "globals.hpp"
+
+#include "SDLinit.hpp"
+
 
 void SDLInit(){
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
@@ -33,5 +35,3 @@ void rendererCheck(){
 void sleep(int time){
 	std::this_thread::sleep_for(std::chrono::milliseconds(time));
 };
-
-unsigned int threadCount = std::thread::hardware_concurrency();

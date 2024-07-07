@@ -1,7 +1,7 @@
-#include "headers.hpp"
-#include "globals.hpp"
+#include "global/globals.hpp"
 #include "draw.hpp"
-#include "colors.hpp"
+#include "global/colors.hpp"
+#include "threed.hpp"
 
 
 int main(){
@@ -12,31 +12,35 @@ int main(){
 	rendererInit();
 	rendererCheck();
 
+
 	bool quit = false;
-	SDL_Event e;
+
+	SDL_Event EvEnT;
 	while(!quit){
-		while(SDL_PollEvent(&e) != 0){
-			if(e.type == SDL_QUIT){
+		while(SDL_PollEvent(&EvEnT) != 0){
+			if(EvEnT.type == SDL_QUIT){
 				quit = true;
 			}
 		}
 
-
-	auto start = std::chrono::system_clock::now();
-
-	SDL_SetRenderDrawColor(renderer, 180,100,200,255);
-
+	SDL_SetRenderDrawColor(renderer, 0,0,0,255);
 	SDL_RenderClear(renderer);
 
-	vec2 a = {0,1080};
-	vec2 b = {0,0};
-	vec2 c = {1920,0};
-	vec2 d = {1920,1080};
+	auto start = std::chrono::system_clock::now();
 	
-	draw(quad(a,b,c,d), teal);
 
+	vec3f d = {-1,1,0};
+	vec3f e = {0,-1,0};
+	vec3f f = {1,1,0};
 
+	vec2 a = ndc2screen(d);
+	vec2 b = ndc2screen(e);
+	vec2 c = ndc2screen(f);
+	
+	draw(tri(a,b,c), magenta);
 	SDL_RenderPresent(renderer);
+
+
 	
 	auto end = std::chrono::system_clock::now();
 

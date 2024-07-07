@@ -2,9 +2,9 @@
 
 
 pkgs.mkShell{
-	buildInputs = with pkgs.buildPackages; [
+	buildInputs = with pkgs; [
 		SDL2
-		];
+	];
 	
 
 }

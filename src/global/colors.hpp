@@ -9,7 +9,7 @@ extern const RGBA red;
 extern const RGBA green;
 extern const RGBA blue;
 extern const RGBA yellow;
-extern const RGBA teal;
+extern const RGBA cyan;
 extern const RGBA magenta;
 
 

@@ -1,5 +1,4 @@
 #include "draw.hpp"
-#include "colors.hpp"
 
 
 void draw(const std::vector<SDL_Point>& points, const RGBA& color){
@@ -14,7 +13,7 @@ void drawFrag(const std::vector<fragment>& frags){
 	}
 }
 
-std::vector<SDL_Point> Hline(const uint16_t& x1, const uint16_t& x2, const uint16_t& y){
+std::vector<SDL_Point> Hline(const uint_fast16_t& x1, const uint_fast16_t& x2, const uint_fast16_t& y){
 	std::vector<SDL_Point> line((x2-x1)+2);
 	for(int i = 0;i<=(x2-x1)+1;i++){
      		line[i].x = x1+i;
@@ -23,7 +22,7 @@ std::vector<SDL_Point> Hline(const uint16_t& x1, const uint16_t& x2, const uint1
 	return line;
 }
 
-std::vector<SDL_Point> Vline(const uint16_t& y1, const uint16_t& y2, const uint16_t& x){
+std::vector<SDL_Point> Vline(const uint_fast16_t& y1, const uint_fast16_t& y2, const uint_fast16_t& x){
 		std::vector<SDL_Point> line((y2-y1)+2);
 	for(int i = 0;i<=(y2-y1)+1;i++){
      		line[i].x = x;
@@ -32,23 +31,23 @@ std::vector<SDL_Point> Vline(const uint16_t& y1, const uint16_t& y2, const uint1
 	return line;
 }
 
-std::vector<SDL_Point> rect(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint16_t& y2){
+std::vector<SDL_Point> rect(const uint_fast16_t& x1, const uint_fast16_t& y1, const uint_fast16_t& x2, const uint_fast16_t& y2){
 
 	std::vector<SDL_Point> rect;
 	for(int i = 0;i<=(x2-x1);i++){
 		for(int k = 0;k<=(y2-y1);k++){
-		rect.push_back({x1+i, y1+k});
+		rect.push_back({int(x1+i), int(y1+k)});
 		}
 	}
 	return rect;
 }
 
 
-int edgeFunction(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint16_t& y2, const uint16_t& x3, const uint16_t& y3){
+int edgeFunction(const uint_fast16_t& x1, const uint_fast16_t& y1, const uint_fast16_t& x2, const uint_fast16_t& y2, const uint_fast16_t& x3, const uint_fast16_t& y3){
 	return (x2-x1)*(y3-y1)-(y2-y1)*(x3-x1);
 }
 
-bool bias(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint16_t& y2){
+bool bias(const uint_fast16_t& x1, const uint_fast16_t& y1, const uint_fast16_t& x2, const uint_fast16_t& y2){
 	if((x1<x2&&y1==y2)||(y1>y2)){ //y is inverted so greater than here really means less than on a regular graph
 		return 0;
 	}
@@ -57,12 +56,17 @@ bool bias(const uint16_t& x1, const uint16_t& y1, const uint16_t& x2, const uint
 }
 
 std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
+
+	if(edgeFunction(v0.x,v0.y,v1.x,v1.y,v2.x,v2.y)<0){
+		return {};
+	}
+
 	std::vector<SDL_Point> tri;	
 	//make bounding box and then clip to screen
-	const uint16_t minX =	std::max(std::min({v0.x,v1.x,v2.x}), uint16_t(0));
-	const uint16_t maxX =	std::min(std::max({v0.x,v1.x,v2.x}), uint16_t(1919));
-	const uint16_t minY =	std::max(std::min({v0.y,v1.y,v2.y}), uint16_t(0));
-	const uint16_t maxY =	std::min(std::max({v0.y,v1.y,v2.y}), uint16_t(1079));
+	const int minX = std::max(int(std::min({v0.x,v1.x,v2.x})), int(0));
+	const int maxX = std::min(int(std::max({v0.x,v1.x,v2.x})), int(1919));
+	const int minY = std::max(int(std::min({v0.y,v1.y,v2.y})), int(0));
+	const int maxY = std::min(int(std::max({v0.y,v1.y,v2.y})), int(1079));
 
 	//fill rule to only draw top and left edge for clockwise tri, counter clockwise doesnt get drawn
 	bool bias0 = bias(v1.x,v1.y,v2.x,v2.y);
@@ -91,8 +95,8 @@ std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
 
 		for(p.x = minX;p.x<=maxX;p.x++){
      			if((w0|w1|w2)>=0){
-				tri.push_back({static_cast<int>(p.x), static_cast<int>(p.y)});
-     			}
+				tri.push_back({int(p.x),int(p.y)});
+			}
      			
      			w0+=A12;
      			w1+=A20;
@@ -103,39 +107,34 @@ std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
 		w1_row+=B20;
 		w2_row+=B01;
 	}
-
 	return tri;
-
-     				
-	
 }
 
-/* depracated
-
-std::vector<fragment> RGBtri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3){
+/*
+std::vector<fragment> RGBtri(vec2 v0, vec2 v1, vec2 v2, RGBA col1, RGBA col2, RGBA col3){
 	std::vector<fragment> tri;
 	
-	int minX = std::min(x1, std::min(x2,x3));
-	int maxX = std::max(x1, std::max(x2,x3));
-	int minY = std::min(y1, std::min(y2,y3));
-	int maxY = std::max(y1, std::max(y2,y3));
+	const uint_fast16_t minX =	std::max(std::min({v0.x,v1.x,v2.x}), uint_fast16_t(0));
+	const uint_fast16_t maxX =	std::min(std::max({v0.x,v1.x,v2.x}), uint_fast16_t(1919));
+	const uint_fast16_t minY =	std::max(std::min({v0.y,v1.y,v2.y}), uint_fast16_t(0));
+	const uint_fast16_t maxY =	std::min(std::max({v0.y,v1.y,v2.y}), uint_fast16_t(1079));
 
-	int p = edgeFunction(x1,y1,x2,y2,x3,y3);
+	int p = edgeFunction(v0.x,v0.y,v1.x,v1.y,v2.x,v2.y);
 
-	for(uint16_t y = minY;y<=maxY;y++){
-		for(uint16_t x = minX;x<=maxX;x++){
-     			int a = edgeFunction(x2,y2,x3,y3,x,y);
-     			int b = edgeFunction(x3,y3,x1,y1,x,y);
-     			int c = edgeFunction(x1,y1,x2,y2,x,y);
+	for(uint_fast16_t y = minY;y<=maxY;y++){
+		for(uint_fast16_t x = minX;x<=maxX;x++){
+     			int a = edgeFunction(v1.x,v1.y,v2.x,v2.y,x,y);
+     			int b = edgeFunction(v2.x,v2.y,v0.x,v0.y,x,y);
+     			int c = edgeFunction(v0.x,v0.y,v1.x,v1.y,x,y);
 
      			if((a|b|c)>=0){
 				float w1 = ((float)a/(float)p);
 				float w2 = ((float)b/(float)p);
 				float w3 = ((float)c/(float)p);
 
-				uint8_t R = red.r*w1+green.r*w2+blue.r*w3;
-				uint8_t G = red.g*w1+green.g*w2+blue.g*w3;
-				uint8_t B = red.b*w1+green.b*w2+blue.b*w3;
+				uint8_t R = col1.r*w1+col2.r*w2+col3.r*w3;
+				uint8_t G = col1.g*w1+col2.g*w2+col3.g*w3;
+				uint8_t B = col1.b*w1+col2.b*w2+col3.b*w3;
 
      				tri.push_back({x,y,R,G,B,255});
      			}
@@ -146,6 +145,7 @@ std::vector<fragment> RGBtri(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 	
 }
 */
+
 std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, const vec2& v3){
 
 	std::vector<SDL_Point> quad;
@@ -195,8 +195,6 @@ std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, cons
 
 
 }
-
-
 
 
 
