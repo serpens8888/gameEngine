@@ -27,17 +27,14 @@ int main(){
 	SDL_RenderClear(renderer);
 
 	auto start = std::chrono::system_clock::now();
-	
 
-	vec3f d = {-1,1,0};
-	vec3f e = {0,-1,0};
-	vec3f f = {1,1,0};
-
-	vec2i a = ndc2screen(d);
-	vec2i b = ndc2screen(e);
-	vec2i c = ndc2screen(f);
+	vec2i a = {0,SCR_HEIGHT};
+	vec2i b = {SCR_WIDTH/2,0};
+	vec2i c = {SCR_WIDTH,SCR_HEIGHT};
 	
-	draw(tri(a,b,c), magenta);
+	drawFrag(RGBtri(a,b,c,red,green,blue));
+
+	
 	SDL_RenderPresent(renderer);
 
 
@@ -47,14 +44,6 @@ int main(){
 	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-start);
 	std::cout << "fps: " << 1000/(float(duration.count())/1000000) << "        ||        " << "ms elapsed this cycle: " << float(duration.count())/1000000 << "\n";
 	std::cout << "available threads: " << threadCount << "\n";
-	std::vector<float> won = {2,3,4,5};
-	std::vector<float> too = {4,6,7,8};
-
-	std::vector<float> resoolt = matmul(2,2,2,won,too);
-
-	for(float f : resoolt){
-		std::cout << resoolt[f] << "\n";
-	}
 
 	}
 

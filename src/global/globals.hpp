@@ -20,15 +20,21 @@ const camera gCam = {
 	100.0f //far plane distance
 				
 };
-
-const int a = access2d(12,12,9);
+/*
 const std::vector<float> projectionMatrix = {
 	(1.0f/(gCam.aspect*(tan(gCam.fov/2.0f)))), 0.0f, 0.0f, 0.0f,
 	0.0f, (1.0f/(tan(gCam.fov/2.0f))), 0.0f, 0.0f,
 	0.0f, 0.0f, ((gCam.far+gCam.near)/(gCam.near-gCam.far)), ((2.0f*gCam.far*gCam.near)/(gCam.near-gCam.far)),
 	0.0f, 0.0f, -1.0f, 0.0f
 };
+*/
 
+const std::vector<float> projectionMatrix = {
+	1.0f,0.0f,0.0f,0.0f,
+	0.0f,1.0f,0.0f,0.0f,
+	0.0f,0.0f,-1.0f,0.0f,
+	0.0f,0.0f,0.0f,1.0f
+};
 
 
 #endif

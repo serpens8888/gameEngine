@@ -110,15 +110,13 @@ std::vector<SDL_Point> tri(const vec2i& v0, const vec2i& v1, const vec2i& v2){
 	return tri;
 }
 
-/*
 std::vector<fragment> RGBtri(vec2i v0, vec2i v1, vec2i v2, RGBA col1, RGBA col2, RGBA col3){
 	std::vector<fragment> tri;
 	
-	const uint_fast16_t minX =	std::max(std::min({v0.x,v1.x,v2.x}), uint_fast16_t(0));
-	const uint_fast16_t maxX =	std::min(std::max({v0.x,v1.x,v2.x}), uint_fast16_t(1919));
-	const uint_fast16_t minY =	std::max(std::min({v0.y,v1.y,v2.y}), uint_fast16_t(0));
-	const uint_fast16_t maxY =	std::min(std::max({v0.y,v1.y,v2.y}), uint_fast16_t(1079));
-
+	const int minX = std::max(int(std::min({v0.x,v1.x,v2.x})), int(0));
+	const int maxX = std::min(int(std::max({v0.x,v1.x,v2.x})), int(1919));
+	const int minY = std::max(int(std::min({v0.y,v1.y,v2.y})), int(0));
+	const int maxY = std::min(int(std::max({v0.y,v1.y,v2.y})), int(1079));
 	int p = edgeFunction(v0.x,v0.y,v1.x,v1.y,v2.x,v2.y);
 
 	for(uint_fast16_t y = minY;y<=maxY;y++){
@@ -144,7 +142,6 @@ std::vector<fragment> RGBtri(vec2i v0, vec2i v1, vec2i v2, RGBA col1, RGBA col2,
 	return tri;     			
 	
 }
-*/
 
 std::vector<SDL_Point> quad(const vec2i& v0, const vec2i& v1, const vec2i& v2, const vec2i& v3){
 
