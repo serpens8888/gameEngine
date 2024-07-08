@@ -19,11 +19,11 @@ bool bias(const uint_fast16_t& x1, const uint_fast16_t& y1, const uint_fast16_t&
 
 int edgeFunction(const uint_fast16_t& x1, const uint_fast16_t& y1, const uint_fast16_t& x2, const uint_fast16_t& y2, const uint_fast16_t& x3, const uint_fast16_t& y3);
 
-std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2);
+std::vector<SDL_Point> tri(const vec2i& v0, const vec2i& v1, const vec2i& v2);
 
-std::vector<fragment> RGBtri(vec2 v0, vec2 v1, vec2 v2, RGBA col1, RGBA col2, RGBA col3);
+std::vector<fragment> RGBtri(vec2i v0, vec2i v1, vec2i v2, RGBA col1, RGBA col2, RGBA col3);
 
-std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, const vec2& v3);
+std::vector<SDL_Point> quad(const vec2i& v0, const vec2i& v1, const vec2i& v2, const vec2i& v3);
 
 
 #endif

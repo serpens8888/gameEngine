@@ -1,8 +1,8 @@
 #include "threed.hpp"
 
-vec2 ndc2screen(vec3f point){
+vec2i ndc2screen(vec3f point){
 
-	vec2 origin = {(SCR_WIDTH/2),(SCR_HEIGHT/2)};
+	vec2i origin = {(SCR_WIDTH/2),(SCR_HEIGHT/2)};
 
 	return {(origin.x + int_fast64_t((point.x*origin.x))),(origin.y + int_fast64_t((point.y*origin.y)))};
 }

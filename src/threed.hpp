@@ -5,7 +5,7 @@
 
 void drawCube(vec3i v0, vec3i v1, vec3i v2, vec3i v3, vec3i v4, vec3i v5, vec3i v6, vec3i v7, vec3i v8);
 
-vec2 ndc2screen(vec3f point);
+vec2i ndc2screen(vec3f point);
 
 
 

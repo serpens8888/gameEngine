@@ -13,7 +13,7 @@ void drawFrag(const std::vector<fragment>& frags){
 	}
 }
 
-std::vector<SDL_Point> Hline(const uint_fast16_t& x1, const uint_fast16_t& x2, const uint_fast16_t& y){
+std::vector<SDL_Point>Hline(const uint_fast16_t& x1, const uint_fast16_t& x2, const uint_fast16_t& y){
 	std::vector<SDL_Point> line((x2-x1)+2);
 	for(int i = 0;i<=(x2-x1)+1;i++){
      		line[i].x = x1+i;
@@ -55,7 +55,7 @@ bool bias(const uint_fast16_t& x1, const uint_fast16_t& y1, const uint_fast16_t&
 
 }
 
-std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
+std::vector<SDL_Point> tri(const vec2i& v0, const vec2i& v1, const vec2i& v2){
 
 	if(edgeFunction(v0.x,v0.y,v1.x,v1.y,v2.x,v2.y)<0){
 		return {};
@@ -82,7 +82,7 @@ std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
 	int16_t B20 = v0.x - v2.x;
 
 	//barycentric coords at bounding box origin
-	vec2 p = {minX,minY};
+	vec2i p = {minX,minY};
 	int32_t w0_row = edgeFunction(v1.x,v1.y,v2.x,v2.y,p.x,p.y) - bias0;
 	int32_t w1_row = edgeFunction(v2.x,v2.y,v0.x,v0.y,p.x,p.y) - bias1;
 	int32_t w2_row = edgeFunction(v0.x,v0.y,v1.x,v1.y,p.x,p.y) - bias2;
@@ -111,7 +111,7 @@ std::vector<SDL_Point> tri(const vec2& v0, const vec2& v1, const vec2& v2){
 }
 
 /*
-std::vector<fragment> RGBtri(vec2 v0, vec2 v1, vec2 v2, RGBA col1, RGBA col2, RGBA col3){
+std::vector<fragment> RGBtri(vec2i v0, vec2i v1, vec2i v2, RGBA col1, RGBA col2, RGBA col3){
 	std::vector<fragment> tri;
 	
 	const uint_fast16_t minX =	std::max(std::min({v0.x,v1.x,v2.x}), uint_fast16_t(0));
@@ -146,7 +146,7 @@ std::vector<fragment> RGBtri(vec2 v0, vec2 v1, vec2 v2, RGBA col1, RGBA col2, RG
 }
 */
 
-std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, const vec2& v3){
+std::vector<SDL_Point> quad(const vec2i& v0, const vec2i& v1, const vec2i& v2, const vec2i& v3){
 
 	std::vector<SDL_Point> quad;
 
@@ -174,7 +174,7 @@ std::vector<SDL_Point> quad(const vec2& v0, const vec2& v1, const vec2& v2, cons
 
 	uint8_t concaveVec = (check > 1) + (check > 3) + (check > 7);
 	constexpr int size = 4;
-	const std::array<vec2, size> verts = {v0, v1, v2 ,v3};
+	const std::array<vec2i, size> verts = {v0, v1, v2 ,v3};
 	
 	std::vector<SDL_Point> triA;
 	std::vector<SDL_Point> triB;

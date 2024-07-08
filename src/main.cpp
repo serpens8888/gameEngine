@@ -33,9 +33,9 @@ int main(){
 	vec3f e = {0,-1,0};
 	vec3f f = {1,1,0};
 
-	vec2 a = ndc2screen(d);
-	vec2 b = ndc2screen(e);
-	vec2 c = ndc2screen(f);
+	vec2i a = ndc2screen(d);
+	vec2i b = ndc2screen(e);
+	vec2i c = ndc2screen(f);
 	
 	draw(tri(a,b,c), magenta);
 	SDL_RenderPresent(renderer);
@@ -47,6 +47,14 @@ int main(){
 	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-start);
 	std::cout << "fps: " << 1000/(float(duration.count())/1000000) << "        ||        " << "ms elapsed this cycle: " << float(duration.count())/1000000 << "\n";
 	std::cout << "available threads: " << threadCount << "\n";
+	std::vector<float> won = {2,3,4,5};
+	std::vector<float> too = {4,6,7,8};
+
+	std::vector<float> resoolt = matmul(2,2,2,won,too);
+
+	for(float f : resoolt){
+		std::cout << resoolt[f] << "\n";
+	}
 
 	}
 

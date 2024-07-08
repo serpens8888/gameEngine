@@ -1,11 +1,11 @@
 #input dirs
 SRC = src
-GLOBAL = src/global
+GLOBAL = $(SRC)/global
 
 
 #input files
 INPUTS = $(SRC)/main.cpp $(SRC)/draw.cpp  $(SRC)/threed.cpp
-GLOBALS = $(GLOBAL)/globals.cpp $(GLOBAL)/colors.cpp $(GLOBAL)/SDLinit.cpp
+GLOBALS = $(GLOBAL)/globals.cpp $(GLOBAL)/colors.cpp $(GLOBAL)/SDLinit.cpp $(GLOBAL)/math.cpp
 
 #tools
 CXX = clang++

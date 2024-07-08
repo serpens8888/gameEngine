@@ -19,15 +19,20 @@ struct fragment{
 	uint8_t a;
 };
 
-struct vec2{
-	int_fast16_t x;
-	int_fast64_t y;
+struct vec2i{
+	int64_t x;
+	int64_t y;
+};
+
+struct vec2f{
+	float x;
+	float y;
 };
 
 struct vec3i{
-	int_fast64_t x;
-	int_fast64_t y;
-	int_fast64_t z;
+	int64_t x;
+	int64_t y;
+	int64_t z;
 };
 
 struct vec3f{

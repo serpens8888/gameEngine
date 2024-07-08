@@ -5,11 +5,11 @@
 
 #include "data.hpp" //holds structs
 #include "SDLinit.hpp" //holds sdl initialization functions
-
+#include "math.hpp"
 
 extern unsigned int threadCount;
-const uint_fast64_t SCR_WIDTH = 1919;
-const uint_fast64_t SCR_HEIGHT = 1079;
+const uint64_t SCR_WIDTH = 1919;
+const uint64_t SCR_HEIGHT = 1079;
 
 
 const camera gCam = {
@@ -21,6 +21,7 @@ const camera gCam = {
 				
 };
 
+const int a = access2d(12,12,9);
 const std::vector<float> projectionMatrix = {
 	(1.0f/(gCam.aspect*(tan(gCam.fov/2.0f)))), 0.0f, 0.0f, 0.0f,
 	0.0f, (1.0f/(tan(gCam.fov/2.0f))), 0.0f, 0.0f,
