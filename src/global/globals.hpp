@@ -21,12 +21,12 @@ const camera gCam = {
 				
 };
 
-const float projectionMatrix[16] = {
-	(1/(gCam.aspect*(tan(gCam.fov/2)))), 0, 0, 0,
-	0, (1/(tan(gCam.fov/2))), 0, 0,
-	0, 0, ((gCam.far+gCam.near)/(gCam.near-gCam.far)), ((2*gCam.far*gCam.near)/(gCam.near-gCam.far)),
-	0, 0, -1, 0
-}; //ugly matrix
+const std::vector<float> projectionMatrix = {
+	(1.0f/(gCam.aspect*(tan(gCam.fov/2.0f)))), 0.0f, 0.0f, 0.0f,
+	0.0f, (1.0f/(tan(gCam.fov/2.0f))), 0.0f, 0.0f,
+	0.0f, 0.0f, ((gCam.far+gCam.near)/(gCam.near-gCam.far)), ((2.0f*gCam.far*gCam.near)/(gCam.near-gCam.far)),
+	0.0f, 0.0f, -1.0f, 0.0f
+};
 
 
 

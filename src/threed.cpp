@@ -14,6 +14,8 @@ float cameraDistance(vec3f b){
 
 }
 
+
+
 auto interpEdge(vec3i a, vec3i b, vec3i c){	
 	
 }
