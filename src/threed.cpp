@@ -8,9 +8,9 @@ vec2 ndc2screen(vec3f point){
 }
 
 float cameraDistance(vec3f b){
-	return sqrt( (b.x-globalCamera.pos.x)*(b.x-globalCamera.pos.x) +
-	     	     (b.y-globalCamera.pos.y)*(b.y-globalCamera.pos.y) +
-	     	     (b.z-globalCamera.pos.z)*(b.z-globalCamera.pos.z));
+	return sqrt( (b.x-gCam.pos.x)*(b.x-gCam.pos.x) +
+	     	     (b.y-gCam.pos.y)*(b.y-gCam.pos.y) +
+	     	     (b.z-gCam.pos.z)*(b.z-gCam.pos.z));
 
 }
 
